@@ -63,7 +63,7 @@
                     animation: 500
                 });
             });
-            this.images = this.$store.state.localStorage.list;
+            //this.images = this.$store.state.localStorage.list;
         },
     }
 </script>

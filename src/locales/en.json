@@ -1,3 +1,9 @@
 {
-  "message": "hello i18n !!"
+  "home": {
+    "welcome": "WELCOME MY FRIEND TO RAPTORBOOST.GG",
+    "hello": "Hello"
+  },
+  "menu": {
+    "upcommingevents": "Upcoming Events"
+  }
 }

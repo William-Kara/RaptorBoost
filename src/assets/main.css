@@ -12,14 +12,35 @@ body {
 
 a {
   color: #ffff !important;
+  outline: none;
 }
 
 .locale-changer {
   margin-top: 8px;
+  color: white;
+  float: right;
+  margin-bottom: 20px;
 }
 
-.locale-changer i, .locale-changer select {
+.locale-changer select {
+  background: #dcdcdc;
+  width: 50px;
+  text-align: center;
+  border: 3px black;
+  border-radius: 2px;
+  height: 29px;
+}
+
+.locale-changer i {
   color: #ffff;
+}
+
+button {
+  outline: none;
+}
+
+button:focus {
+  outline: none !important;
 }
 
 /* TIERLIST CSS */
@@ -112,4 +133,22 @@ a {
   margin-left: auto;
   margin-right: auto;
   display: block;
+}
+
+/* MatchRow */
+
+.match-row {
+  background: yellow;
+  border-radius: 30px;
+}
+
+.btn-light {
+  background-color: transparent !important;
+  border: 1px solid transparent !important;
+  width: 100% !important;
+  box-shadow: none !important;
+
+}
+button:-moz-focusring, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-focus-inner, [type="submit"]::-moz-focus-inner {
+  outline: none !important;
 }

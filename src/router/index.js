@@ -15,8 +15,13 @@ const routes = [
     component: () => import('../components/UserCreate')
   },
   {
+    path: '/matches',
+    name: 'Matches',
+    component: () => import('../components/Matches')
+  },
+  {
     path: '/list',
-    name: 'list',
+    name: 'Row',
     component: () => import('../components/MatchRow')
   },
   {

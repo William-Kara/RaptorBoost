@@ -1,58 +1,30 @@
 <template>
   <body>
-    <div>
-      
-      <nav class="navbar justify-content-between flex-nowrap flex-row">
-        <div class="container">
-          <div>
-        <img
-          :src="require('./assets/logo.svg')"
-          width="150px"
-        />
-          <a class="navbar-brand float-left">RAPTORBOOST</a> 
-          </div>
-
-      
-
-          <ul class="nav navbar-nav flex-row float-right">
-            <li class="nav-item">
-              <router-link class="nav-link pr-4" to="/">Trouver</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link pr-4" to="/list"
-                >Liste de VOD</router-link
-              >
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link pr-4" to="/add">Ajouter</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link pr-4" to="/framedata"
-                >FrameData</router-link
-              >
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link pr-4" to="/tierlist"
-                >TierList</router-link
-              >
-            </li>
-            <li class="nav-item">
-              <div class="locale-changer">
-                <select v-model="$i18n.locale">
-                  <option
-                    v-for="(lang, i) in langs"
-                    :key="`Lang${i}`"
-                    :value="lang"
-                    >{{ lang }}
-                    </option>
-                </select>
-                <i class="fas fa-globe"></i>
-              </div>
-            </li>
-          </ul>
+    <sidebar-menu
+      :menu="menu"
+      :collapsed="collapsed"
+      v-click-outside="handleFocusOut"
+      @toggle-collapse="onToggleCollapse"
+    >
+      <span slot="header">
+        <div class="vsm--item">
+          <router-link class="vsm--link" to="/"
+            ><img
+              class="vsm--title"
+              :src="require('./assets/logo.svg')"
+              width="150px"
+          /></router-link>
         </div>
-      </nav>
-
+        <div class="locale-changer">
+          <select v-model="$i18n.locale">
+            <option v-for="(lang, i) in langs" :key="`Lang${i}`" :value="lang"
+              >{{ lang }}
+            </option>
+          </select>
+        </div>
+      </span>
+    </sidebar-menu>
+    <div>
       <div class="container mt-5">
         <router-view></router-view>
       </div>
@@ -62,12 +34,73 @@
 
 <script>
 export default {
-  name: "locale-changer",
   data() {
-    return { langs: ["en", "fr"] };
+    return {
+      langs: ["en", "fr"],
+    };
+  },
+  props: {
+    collapsed: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  methods: {
+    handleFocusOut() {
+      this.collapsed = true;
+    },
+    onToggleCollapse() {
+      this.collapsed = !this.collapsed;
+    },
+  },
+  computed: {
+    menu() {
+      return [
+        {
+          href: "",
+          title: "VOD Finder",
+          icon: "far fa-play-circle",
+          child: [
+            {
+              href: "/list",
+              title: "VOD By Character / Matchup",
+            },
+            {
+              href: "/tierlist",
+              title: "VOD By Players",
+            },
+            {
+              href: "/framedata",
+              title: "VOD By Tournaments",
+            },
+            {
+              href: "/guides",
+              title: "Guides",
+            },
+          ],
+        },
+        {
+          href: "/framedata",
+          title: "FrameData",
+          icon: "fas fa-sort-amount-up-alt",
+        },
+        {
+          href: "/tierlist",
+          title: "TierList",
+          icon: "fas fa-th-list",
+        },
+        {
+          href: "/tierlist",
+          title: this.$t("menu.upcommingevents"),
+          icon: "fas fa-th-list",
+        },
+        {
+          href: "/tierlist",
+          title: "Patchnotes",
+          icon: "fas fa-th-list",
+        },
+      ];
+    },
   },
 };
 </script>
-
-
-

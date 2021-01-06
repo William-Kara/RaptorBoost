@@ -152,3 +152,7 @@ button:focus {
 button:-moz-focusring, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-focus-inner, [type="submit"]::-moz-focus-inner {
   outline: none !important;
 }
+
+.collapsed {
+  padding-left:350px;
+}

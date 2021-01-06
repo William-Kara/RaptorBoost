@@ -1,5 +1,10 @@
 <template>
-  <body>
+  <div 
+    class="app"
+    :class="{ collapsed: !collapsed }">
+    <div class="container mt-5">
+      <router-view></router-view>
+    </div>
     <sidebar-menu
       :menu="menu"
       :collapsed="collapsed"
@@ -13,7 +18,8 @@
               class="vsm--title"
               :src="require('./assets/logo.svg')"
               width="150px"
-          /></router-link>
+          />
+          </router-link>
         </div>
         <div class="locale-changer">
           <select v-model="$i18n.locale">
@@ -24,12 +30,7 @@
         </div>
       </span>
     </sidebar-menu>
-    <div>
-      <div class="container mt-5">
-        <router-view></router-view>
-      </div>
-    </div>
-  </body>
+  </div>
 </template>
 
 <script>
@@ -42,7 +43,7 @@ export default {
   props: {
     collapsed: {
       type: Boolean,
-      default: false,
+      default: true,
     },
   },
   methods: {

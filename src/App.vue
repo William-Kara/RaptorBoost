@@ -1,7 +1,7 @@
 <template>
   <div 
     class="app"
-    :class="{ collapsed: !collapsed }">
+    :class="{ collapsed: collapsed }">
     <div class="container mt-5">
       <router-view></router-view>
     </div>

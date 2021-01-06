@@ -153,6 +153,12 @@ button:-moz-focusring, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-f
   outline: none !important;
 }
 
+.app{
+  transition: 0.3s ease;
+  padding-left: 350px;
+}
+
 .collapsed {
-  padding-left:350px;
+  padding-left:0;
+  transition: 0.3s ease;
 }

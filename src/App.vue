@@ -17,7 +17,6 @@
             ><img
               class="vsm--title"
               :src="require('./assets/logo.svg')"
-              width="150px"
           />
           </router-link>
         </div>

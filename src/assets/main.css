@@ -115,6 +115,10 @@ button:focus {
   margin: 10px auto;
 }
 
+.sortable-characters {
+  padding-top:25px;
+}
+
 .tierlist-div img {
   width: 94px;
   height: 94px;
@@ -161,4 +165,9 @@ button:-moz-focusring, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-f
 .collapsed {
   padding-left:0;
   transition: 0.3s ease;
+}
+.vsm--title {
+  width: 100%;
+  max-width: 100px;
+  margin:0 auto;
 }

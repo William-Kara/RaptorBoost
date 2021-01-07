@@ -10,9 +10,14 @@ const routes = [
     component: () => import('../components/Home')
   },
   {
-    path: '/add',
+    path: '/add-match',
     name: 'add',
-    component: () => import('../components/UserCreate')
+    component: () => import('../components/AddMatch')
+  },
+  {
+    path: '/view-matches',
+    name: 'view',
+    component: () => import('../components/ListMatches')
   },
   {
     path: '/matches',

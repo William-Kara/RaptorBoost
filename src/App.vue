@@ -99,6 +99,16 @@ export default {
           title: "Patchnotes",
           icon: "fas fa-th-list",
         },
+                {
+          href: "/add-match",
+          title: "Add Matches",
+          icon: "fas fa-th-list",
+        },
+                        {
+          href: "/view-matches",
+          title: "View Matches",
+          icon: "fas fa-th-list",
+        },
       ];
     },
   },

@@ -62,18 +62,7 @@
                     {{ vod.player_2 }}
                   </div>
                 </div>
-
-                <b-collapse id="collapse-1" class="mt-2">
-                  <b-card>
-                    <div class="text-xs-right" xs1>
-                      <youtube
-                        :video-id="'EM2JL7iqdCY'"
-                        @ready="ready"
-                        @playing="playing"
-                      ></youtube>
-                    </div>
-                  </b-card>
-                </b-collapse>
+                <CollapsibleVideo videoId="EM2JL7iqdCY"/>
               </div>
             </div>
           </div>
@@ -85,8 +74,12 @@
 
 <script>
 import { db } from "../firebaseDb";
+import CollapsibleVideo from "./CollapsibleVideo"
 
 export default {
+  components: {
+    CollapsibleVideo
+  },
   data() {
     return {
       Vods: [],

@@ -22,7 +22,7 @@
   </div> -->
   <table class="table table-striped">
     <li class="match-row" v-for="vod in Vods" :key="vod.key">
-      <b-button v-b-toggle.collapse-1 variant="light">
+      <b-button v-b-toggle:[vod.key] variant="light">
         <v-divider class="my-1" v-if="consecutiveMatch" />
         <div align-center>
           <div :column="$vuetify.breakpoint.xsOnly">
@@ -77,7 +77,7 @@
                   </div>
                 </div>
               </div>
-              <CollapsibleVideo videoId="EM2JL7iqdCY" />
+              <CollapsibleVideo videoId="EM2JL7iqdCY" :collapseId="vod.key"/>
             </div>
           </div>
         </div>

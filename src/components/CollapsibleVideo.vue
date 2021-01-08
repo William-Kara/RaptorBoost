@@ -1,6 +1,6 @@
 <template>
     <b-collapse 
-        id="collapse-1" 
+        :id="collapseId" 
         @hide="elementIsHiding"
         @show="elementIsShowing"
     >
@@ -30,6 +30,7 @@ export default {
     version: String,
     videoId: String,
     consecutiveMatch: Boolean,
+    collapseId: String
   },
   data: function () {
     return {
@@ -40,16 +41,16 @@ export default {
   },
   methods: { 
     elementIsHiding : function (){
-      console.log("element is hiding")
+      // console.log("element is hiding")
       if(this.video && this.videoIsPlaying){
         this.video.pauseVideo()
       }
     },
     elementIsShowing : function () {
-      console.log("element is showing")
+      // console.log("element is showing")
       console.log(this.videoIsPlaying, this.videoIsPaused)
       if(!this.videoIsPlaying && this.videoIsPaused){
-        console.log("can play video")
+        // console.log("can play video")
         this.video.playVideo()
       }
     },
@@ -58,12 +59,12 @@ export default {
     },
     videoPlaying: function(e) {
       console.log(e)
-      console.log("video start playing")
+      // console.log("video start playing")
       this.videoIsPlaying = true
       this.videoIsPaused = false
     },
     videoPaused(){
-      console.log("video is paused")
+      // console.log("video is paused")
       this.videoIsPaused = true
       this.videoIsPlaying = false
     }

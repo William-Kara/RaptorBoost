@@ -25,44 +25,42 @@
     <table class="table table-striped">
       <li v-for="vod in Vods" :key="vod.key">
         <b-button v-b-toggle.collapse-1 variant="light">
-          <div align-center class="mt-5">
-            <div>
-              <div class="cutoff">
-                {{ vod.title }}
-              </div>
-              <div class="cutoff">
-                02/03/2021 | {{ vod.version }} | {{ vod.tournament }}
-              </div>
-            </div>
-          </div>
           <v-divider class="my-1" v-if="consecutiveMatch" />
           <div align-center>
-            <div xs1 class="mr-3 hidden-xs-only" />
-            <div class="pr-2 hidden-sm-and-up" />
             <div :column="$vuetify.breakpoint.xsOnly">
               <div xs6>
                 <div row align-center>
-                  <div class="ma-1">
-                    {{ vod.player_1 }}
+                  <div class="player1-zone col-md-4">
+                    <img src="../assets/img/champs/Aatrox.png" />
+                    <div class="ma-1">
+                      {{ vod.player_1 }}
+                    </div>
+                    <div>
+                      {{ vod.character_1 }}
+                    </div>
                   </div>
-                  <div>
-                    {{ vod.character_1 }}
-                    <!--                 <v-avatar size="36px">
-                  <img src="../assets/img/champs/Aatrox.png" />
-                </v-avatar> -->
+                  <div align-center class="versus-zone col-md-4">
+                    <div>
+                      <div class="cutoff">
+                        {{ vod.title }}
+                      </div>
+                      <div class="cutoff">
+                        02/03/2021 | {{ vod.version }} | {{ vod.tournament }}
+                      </div>
+                      <div class="ma-1">vs</div>
+                    </div>
                   </div>
-                  <div class="ma-1">vs</div>
-                  <div>
-                    {{ vod.character_2 }}
-                    <!--                 <v-avatar size="36px">
-                  <img src="../assets/img/champs/Aatrox.png" />
-                </v-avatar> -->
-                  </div>
-                  <div class="ma-1">
-                    {{ vod.player_2 }}
+                  <div class="player2-zone col-md-4">
+                    <div>
+                      {{ vod.character_2 }}
+                    </div>
+                    <div class="ma-1">
+                      {{ vod.player_2 }}
+                    </div>
+                    <img src="../assets/img/champs/Darius.png" />
                   </div>
                 </div>
-                <CollapsibleVideo videoId="EM2JL7iqdCY"/>
+                <CollapsibleVideo videoId="EM2JL7iqdCY" />
               </div>
             </div>
           </div>
@@ -74,11 +72,11 @@
 
 <script>
 import { db } from "../firebaseDb";
-import CollapsibleVideo from "./CollapsibleVideo"
+import CollapsibleVideo from "./CollapsibleVideo";
 
 export default {
   components: {
-    CollapsibleVideo
+    CollapsibleVideo,
   },
   data() {
     return {

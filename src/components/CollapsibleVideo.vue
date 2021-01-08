@@ -1,7 +1,6 @@
 <template>
     <b-collapse 
         id="collapse-1" 
-        class="mt-2"
         @hide="elementIsHiding"
         @show="elementIsShowing"
     >

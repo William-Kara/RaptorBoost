@@ -158,6 +158,22 @@ button:-moz-focusring, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-f
   outline: none !important;
 }
 
+.player1-zone, .versus-zone, .player2-zone{
+  float: left;
+}
+
+.player1-zone {
+  text-align: left;
+}
+
+.versus-zone {
+  text-align: center;
+}
+
+.player2-zone {
+  text-align: right;
+}
+
 .app{
   transition: 0.3s ease;
   padding-left: 350px;
@@ -167,7 +183,7 @@ button:-moz-focusring, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-f
   padding-left:0;
   transition: 0.3s ease;
 }
-.vsm--title {
+.vsm--logoheader {
   width: 100%;
   max-width: 100px;
   margin:0 auto;

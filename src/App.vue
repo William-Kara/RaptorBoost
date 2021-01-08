@@ -15,7 +15,7 @@
         <div class="vsm--item">
           <router-link class="vsm--link" to="/"
             ><img
-              class="vsm--title"
+              class="vsm--title vsm--logoheader"
               :src="require('./assets/logo.svg')"
           />
           </router-link>
@@ -42,7 +42,7 @@ export default {
   props: {
     collapsed: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   methods: {

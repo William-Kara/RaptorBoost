@@ -5,7 +5,7 @@
         @show="elementIsShowing"
     >
         <b-card>
-        <div class="text-xs-right" xs1>
+        <div class="text-xs-right youtube-holder" xs1>
             <youtube
             :video-id="videoId"
             @ready="videoReady"

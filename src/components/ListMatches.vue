@@ -20,54 +20,70 @@
       </table>
     </div>
   </div> -->
+  <table class="table table-striped">
+    <li class="match-row" v-for="vod in Vods" :key="vod.key">
+      <b-button v-b-toggle.collapse-1 variant="light">
+        <v-divider class="my-1" v-if="consecutiveMatch" />
+        <div align-center>
+          <div :column="$vuetify.breakpoint.xsOnly">
+            <div xs6>
+              <div row align-center>
+                <div class="player1-zone col-md-4">
+                  <div class="player1-character-zone">
+                    <img
+                      class="character-render"
+                      src="../assets/img/render/Ryu_render_l.png"
+                    />
 
-  <div class="match-row">
-    <table class="table table-striped">
-      <li v-for="vod in Vods" :key="vod.key">
-        <b-button v-b-toggle.collapse-1 variant="light">
-          <v-divider class="my-1" v-if="consecutiveMatch" />
-          <div align-center>
-            <div :column="$vuetify.breakpoint.xsOnly">
-              <div xs6>
-                <div row align-center>
-                  <div class="player1-zone col-md-4">
-                    <img src="../assets/img/champs/Aatrox.png" />
-                    <div class="ma-1">
-                      {{ vod.player_1 }}
-                    </div>
-                    <div>
+                    <div class="character-name">
                       {{ vod.character_1 }}
                     </div>
                   </div>
-                  <div align-center class="versus-zone col-md-4">
-                    <div>
-                      <div class="cutoff">
-                        {{ vod.title }}
-                      </div>
-                      <div class="cutoff">
-                        02/03/2021 | {{ vod.version }} | {{ vod.tournament }}
-                      </div>
-                      <div class="ma-1">vs</div>
+                  <div class="player1-player-name">
+                    <div class="ma-1">
+                      {{ vod.player_1 }}
                     </div>
                   </div>
-                  <div class="player2-zone col-md-4">
-                    <div>
-                      {{ vod.character_2 }}
+                </div>
+                <div align-center class="versus-zone col-md-4">
+                  <div>
+                    <h3 class="">
+                      {{ vod.title }}
+                    </h3>
+                    <img class="versus-img" src="../assets/img/versus.png" />
+                    <div class="game-version">
+                      <span v-if="vod.version">Version: {{ vod.version }}</span
+                      ><span v-if="vod.tournament && vod.tournament"> | </span
+                      ><span v-if="vod.tournament"
+                        >tournament: {{ vod.tournament }}</span
+                      >
                     </div>
+                  </div>
+                </div>
+                <div class="player2-zone col-md-4">
+                  <div class="player2-player-name">
                     <div class="ma-1">
                       {{ vod.player_2 }}
                     </div>
-                    <img src="../assets/img/champs/Darius.png" />
+                  </div>
+                  <div class="player2-character-zone">
+                    <img
+                      class="character-render"
+                      src="../assets/img/render/Ryu_render_r.png"
+                    />
+                    <div class="character-name">
+                      {{ vod.character_2 }}
+                    </div>
                   </div>
                 </div>
-                <CollapsibleVideo videoId="EM2JL7iqdCY" />
               </div>
+              <CollapsibleVideo videoId="EM2JL7iqdCY" />
             </div>
           </div>
-        </b-button>
-      </li>
-    </table>
-  </div>
+        </div>
+      </b-button>
+    </li>
+  </table>
 </template>
 
 <script>

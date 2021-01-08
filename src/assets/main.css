@@ -3,6 +3,10 @@ body {
   color: #ffffff !important;
 }
 
+button::-moz-focus-inner {
+  border: 0;
+}
+
 .navbar {
   background-color: hsl(212deg 100% 1%) !important;
 }
@@ -14,6 +18,12 @@ body {
 a {
   color: #ffff !important;
   outline: none;
+}
+
+h2 {
+  font-family: "Ubuntu";
+  font-size: 50px;
+  line-height: 65px;
 }
 
 .locale-changer {
@@ -117,7 +127,7 @@ button:focus {
 }
 
 .sortable-characters {
-  padding-top:25px;
+  padding-top: 25px;
 }
 
 .tierlist-div img {
@@ -145,6 +155,7 @@ button:focus {
 .match-row {
   background: yellow;
   border-radius: 30px;
+  margin-top: 30px;
 }
 
 .btn-light {
@@ -152,13 +163,23 @@ button:focus {
   border: 1px solid transparent !important;
   width: 100% !important;
   box-shadow: none !important;
-
 }
-button:-moz-focusring, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-focus-inner, [type="submit"]::-moz-focus-inner {
+button:-moz-focusring,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
   outline: none !important;
 }
 
-.player1-zone, .versus-zone, .player2-zone{
+.character-name {
+  font-family: "Ubuntu";
+  font-size: 3vw;
+  line-height: 65px;
+}
+
+.player1-zone,
+.versus-zone,
+.player2-zone {
   float: left;
 }
 
@@ -174,17 +195,61 @@ button:-moz-focusring, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-f
   text-align: right;
 }
 
-.app{
+.versus-img {
+  max-width: 50%;
+}
+
+.character-render {
+  max-width: 100%;
+}
+
+.player1-character-zone {
+  max-width: 50%;
+  float: left;
+}
+
+.player2-character-zone {
+  max-width: 50%;
+  float: right;
+}
+
+.player1-player-name,
+.player2-player-name {
+  max-width: 50%;
+  float: right;
+}
+
+.player2-player-name {
+  max-width: 50%;
+  float: left;
+}
+
+.game-version {
+  font-size: 11px;
+  font-family: 'Vollkorn';
+}
+
+
+.youtube-holder {
+  margin: 0 100px;
+}
+
+.card {
+  display: block !important;
+  background-color: transparent !important;
+}
+
+.app {
   transition: 0.3s ease;
   padding-left: 350px;
 }
 
 .collapsed {
-  padding-left:0;
+  padding-left: 0;
   transition: 0.3s ease;
 }
 .vsm--logoheader {
   width: 100%;
   max-width: 100px;
-  margin:0 auto;
+  margin: 0 auto;
 }

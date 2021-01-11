@@ -37,7 +37,17 @@ const routes = [
   {
     path: '/tierlist',
     name: 'tierlist',
-    component: () => import('../components/TierList')
+    component: () => import('../pages/TierList')
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('../pages/login')
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: () => import('../pages/register')
   }
 ]
 

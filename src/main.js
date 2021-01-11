@@ -31,6 +31,8 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
+import { store } from './store'
+
 const firebaseConfig = {
     apiKey: "AIzaSyCEaxh77nmwaw7wMJYzm2yiqduYCa_BaLQ",
     authDomain: "project-vod-d6fa4.firebaseapp.com",
@@ -49,6 +51,7 @@ new Vue({
   router,
   vuetify,
   i18n,
+  store,
   render: (h) => h(App),
 }).$mount("#app");
 

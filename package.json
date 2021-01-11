@@ -23,7 +23,8 @@
     "vue-sidebar-menu": "^4.7.4",
     "vue-ultimate-skeleton-cards": "^1.0.3",
     "vue-youtube-embed": "^2.2.2",
-    "vuetify": "^2.2.11"
+    "vuetify": "^2.2.11",
+    "vuex": "^3.6.0"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.15.1",

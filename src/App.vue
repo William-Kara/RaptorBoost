@@ -45,6 +45,9 @@ export default {
       default: false,
     },
   },
+  mounted: function () {
+    console.log(this.$store.state.user)
+  },
   methods: {
     handleFocusOut() {
       this.collapsed = true;

@@ -27,6 +27,22 @@ import VueSidebarMenu from "vue-sidebar-menu";
 import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
 Vue.use(VueSidebarMenu);
 
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCEaxh77nmwaw7wMJYzm2yiqduYCa_BaLQ",
+    authDomain: "project-vod-d6fa4.firebaseapp.com",
+    projectId: "project-vod-d6fa4",
+    storageBucket: "project-vod-d6fa4.appspot.com",
+    messagingSenderId: "772151794196",
+    appId: "1:772151794196:web:3456a5dd7a8d4dfd96e501",
+    measurementId: "G-Y5060RYW9H"
+}
+
+firebase.initializeApp(firebaseConfig);
+
 Vue.config.productionTip = false;
 
 new Vue({

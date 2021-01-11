@@ -87,8 +87,14 @@
 </template>
 
 <script>
-import { db } from "../firebaseDb";
+import firebase from "firebase/app";
+import 'firebase/auth';
+// import 'firebase/database';
+import 'firebase/firestore';
+
 import CollapsibleVideo from "./CollapsibleVideo";
+
+const db = firebase.firestore()
 
 export default {
   components: {

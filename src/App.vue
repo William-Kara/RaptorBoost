@@ -2,7 +2,8 @@
   <div 
     class="app"
     :class="{ collapsed: collapsed }">
-    <div class="container mt-5">
+    <div class="container">
+      <TopBar/>
       <router-view></router-view>
     </div>
     <sidebar-menu
@@ -33,6 +34,8 @@
 </template>
 
 <script>
+import TopBar from './components/TopBar'
+
 export default {
   data() {
     return {
@@ -114,5 +117,8 @@ export default {
       ];
     },
   },
+  components: {
+    TopBar
+  }
 };
 </script>

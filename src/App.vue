@@ -46,7 +46,6 @@ export default {
     },
   },
   mounted: function () {
-    console.log(this.$store.state.user)
   },
   methods: {
     handleFocusOut() {

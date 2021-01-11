@@ -14,12 +14,12 @@ const store = new Vuex.Store({
       state.user.data = user
     },
     SET_LOGGED_IN(state, loggedIn) {
-      state.user.loggedIn = loggedIn
+      state.user.isLogged = loggedIn
     }
   },
   getters: {
-    getCurrentUser: () => {
-      return this.state.user
+    getCurrentUser: (state) => {
+      return state.user
     }
   },
   actions: {

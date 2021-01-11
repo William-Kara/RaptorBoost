@@ -47,6 +47,18 @@ firebase.initializeApp(firebaseConfig);
 
 Vue.config.productionTip = false;
 
+firebase.auth().onAuthStateChanged( (user) => {
+  console.log('Auth State Changed', user)
+  if (user) {
+    // User is signed in.
+    store.dispatch('setCurrentUser', user )
+    console.log(store.state.user.isLogged)
+  } else {
+    // No user is signed in.
+    console.log("No user found")
+  }
+})
+
 new Vue({
   router,
   vuetify,

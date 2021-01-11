@@ -38,7 +38,7 @@
 
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import { mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Login',
@@ -52,22 +52,29 @@ export default {
       errors: null
     }
   },
+  computed: {
+    ...mapGetters([
+      'getCurrentUser'
+    ])
+  },
+  created: function () {
+    console.log("Login component created", this.$store.state.user.isLogged)
+    if(this.getCurrentUser.isLogged){
+      console.log("User already logged")
+      this.$router.replace({name: 'home'})
+    }
+  },
   mounted: function () {
-    console.log("Login component mounted")
+    console.log(this.getCurrentUser)
   },
   methods: {
-    ...mapActions([
-      'setCurrentUser', // map `this.increment()` to `this.$store.dispatch('increment')`
-    ]),
     onSubmit: function (e) {
       e.preventDefault()
       if(this.form.email && this.form.password) {
         console.log("Trying auth to firebase")
         firebase.auth().signInWithEmailAndPassword(this.form.email, this.form.password)
-        .then((data) => {
-          console.log(data.user)
-          this.setCurrentUser(data.user)
-          console.log(this.$store.state.user)
+        .then(() => {
+          this.$router.replace({name: 'home'})     
         })
         .catch((error) => {
           var errorCode = error.code

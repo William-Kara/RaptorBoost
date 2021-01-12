@@ -21,7 +21,7 @@
     </div>
   </div> -->
   <table class="table table-striped">
-    <li class="match-row" v-for="vod in Vods" :key="vod.key">
+    <li class="match-row" v-for="vod in vods" :key="vod.key">
       <b-button v-b-toggle:[vod.key] variant="light">
         <v-divider class="my-1" v-if="consecutiveMatch" />
         <div align-center>
@@ -41,7 +41,7 @@
                   </div>
                   <div class="player1-player-name">
                     <div class="ma-1">
-                      {{ vod.player_1 }}
+                      {{ vod.player_a }}
                     </div>
                   </div>
                 </div>
@@ -102,26 +102,35 @@ export default {
   },
   data() {
     return {
-      Vods: [],
+      vods: [],
       consecutiveMatch: false
     };
   },
   created() {
     db.collection("vods").onSnapshot((snapshotChange) => {
-      this.Vods = [];
-      snapshotChange.forEach((doc) => {
-        this.Vods.push({
-          key: doc.id,
-          title: doc.data().title,
-          youtube_link: doc.data().youtube_link,
-          player_1: doc.data().player_1,
-          character_1: doc.data().character_1,
-          player_2: doc.data().player_2,
-          character_2: doc.data().character_2,
-          version: doc.data().version,
-          tournament: doc.data().tournament,
-        });
+      let vods = []
+      
+      snapshotChange.forEach( doc => {
+        vods.push(this.hydrateData(doc, ['player_a']))
       });
+
+      Promise.all(vods)
+        .then(vodsDatas => {
+          vodsDatas.forEach( docData => {
+          this.vods.push({
+              key: docData.id,
+              title: docData.title,
+              youtube_link: docData.youtube_link,
+              player_1: docData.player_1,
+              player_a: docData.player_a? docData.player_a.name : 'Inconnu',
+              character_1: docData.character_1,
+              player_2: docData.player_2,
+              character_2: docData.character_2,
+              version: docData.version,
+              tournament: docData.tournament,
+            })
+          })
+        })
     });
   },
   methods: {
@@ -138,6 +147,29 @@ export default {
           });
       }
     },
+    getReference: async function (doc, ref) {
+      let data = null
+      if (doc.data()[ref]) {
+        const res = await doc.data()[ref].get()
+        if (res) {
+          data = res.data()
+          data.uid = res.id
+        }
+      }
+      return data
+    },
+    hydrateData: async function (doc, refs) {
+      let arrayData = doc.data()
+      console.log(arrayData.player_1, arrayData.player_2)
+      const promises = refs.map(async ref => {
+        const result = await this.getReference(doc, ref)
+        arrayData[ref] = result
+      })
+      return Promise.all(promises).then(() => {
+        console.log('hydrating data done for:', doc.id)
+        return arrayData
+      })
+    }
   },
 };
 </script>

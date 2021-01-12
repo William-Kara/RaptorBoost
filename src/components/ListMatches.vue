@@ -1,100 +1,99 @@
 <template>
-  <!--   <div class="row">
-    <div class="col-md-12">
-      <table class="table table-striped">
-        <li v-for="vod in Vods" :key="vod.key">
-          <p>{{ vod.title }}</p>
-          <p>{{ vod.youtube_link }}</p>
-          <p>{{ vod.player_1 }}</p>
-          <p>{{ vod.character_1 }}</p>
-          <p>{{ vod.player_2 }}</p>
-          <p>{{ vod.character_2 }}</p>
-          <p>{{ vod.version }}</p>
-          <p>{{ vod.tournament }}</p>
+  <div>
+    <ul>
+      <li v-for="character in characters" :key="character.name">
+        <input
+          type="checkbox"
+          id="jack"
+          :value="character.name"
+          v-model="checkedChar"
+          :disabled="
+            checkedChar.length == 2 &&
+              checkedChar.indexOf(character.name) === -1
+          "
+        />
+        <label :for="character.name">{{ character.name }}</label>
+      </li>
+    </ul>
+    <br />
+    <span>Selected Fighters: {{ filteredCharacter }}</span>
+    <table class="table table-striped">
+      <li class="match-row" v-for="vod in Vods" :key="vod.key">
+        <b-button v-show="filteredCharacter.includes(vod.character_1) || checkedChar == 0" v-b-toggle:[vod.key] variant="light">
+          <v-divider class="my-1" v-if="consecutiveMatch" />
+          <div align-center>
+            <div :column="$vuetify.breakpoint.xsOnly">
+              <div xs6>
+                <div row align-center>
+                  <div class="player1-zone col-md-4">
+                    <div class="player1-character-zone">
+                      <img
+                        class="character-render"
+                        src="../assets/img/render/Ryu_render_l.png"
+                      />
 
-          <button @click.prevent="deleteVod(vod.key)" class="btn btn-danger">
-            Delete
-          </button>
-
-        </li>
-      </table>
-    </div>
-  </div> -->
-  <table class="table table-striped">
-    <li class="match-row" v-for="vod in Vods" :key="vod.key">
-      <b-button v-b-toggle:[vod.key] variant="light">
-        <v-divider class="my-1" v-if="consecutiveMatch" />
-        <div align-center>
-          <div :column="$vuetify.breakpoint.xsOnly">
-            <div xs6>
-              <div row align-center>
-                <div class="player1-zone col-md-4">
-                  <div class="player1-character-zone">
-                    <img
-                      class="character-render"
-                      src="../assets/img/render/Ryu_render_l.png"
-                    />
-
-                    <div class="character-name">
-                      {{ vod.character_1 }}
+                      <div class="character-name">
+                        {{ vod.character_1 }}
+                      </div>
+                    </div>
+                    <div class="player1-player-name">
+                      <div class="ma-1">
+                        {{ vod.player_1 }}
+                      </div>
                     </div>
                   </div>
-                  <div class="player1-player-name">
-                    <div class="ma-1">
-                      {{ vod.player_1 }}
+                  <div align-center class="versus-zone col-md-4">
+                    <div>
+                      <h3 class="">
+                        {{ vod.title }}
+                      </h3>
+                      <img class="versus-img" src="../assets/img/versus.png" />
+                      <div class="game-version">
+                        <span v-if="vod.version"
+                          >Version: {{ vod.version }}</span
+                        ><span v-if="vod.tournament && vod.tournament"> | </span
+                        ><span v-if="vod.tournament"
+                          >tournament: {{ vod.tournament }}</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="player2-zone col-md-4">
+                    <div class="player2-player-name">
+                      <div class="ma-1">
+                        {{ vod.player_2 }}
+                      </div>
+                    </div>
+                    <div class="player2-character-zone">
+                      <img
+                        class="character-render"
+                        src="../assets/img/render/Ryu_render_r.png"
+                      />
+                      <div class="character-name">
+                        {{ vod.character_2 }}
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div align-center class="versus-zone col-md-4">
-                  <div>
-                    <h3 class="">
-                      {{ vod.title }}
-                    </h3>
-                    <img class="versus-img" src="../assets/img/versus.png" />
-                    <div class="game-version">
-                      <span v-if="vod.version">Version: {{ vod.version }}</span
-                      ><span v-if="vod.tournament && vod.tournament"> | </span
-                      ><span v-if="vod.tournament"
-                        >tournament: {{ vod.tournament }}</span
-                      >
-                    </div>
-                  </div>
-                </div>
-                <div class="player2-zone col-md-4">
-                  <div class="player2-player-name">
-                    <div class="ma-1">
-                      {{ vod.player_2 }}
-                    </div>
-                  </div>
-                  <div class="player2-character-zone">
-                    <img
-                      class="character-render"
-                      src="../assets/img/render/Ryu_render_r.png"
-                    />
-                    <div class="character-name">
-                      {{ vod.character_2 }}
-                    </div>
-                  </div>
-                </div>
+                <CollapsibleVideo videoId="EM2JL7iqdCY" :collapseId="vod.key" />
               </div>
-              <CollapsibleVideo videoId="EM2JL7iqdCY" :collapseId="vod.key"/>
             </div>
           </div>
-        </div>
-      </b-button>
-    </li>
-  </table>
+        </b-button>
+      </li>
+    </table>
+  </div>
 </template>
 
 <script>
 import firebase from "firebase/app";
-import 'firebase/auth';
+import "firebase/auth";
 // import 'firebase/database';
-import 'firebase/firestore';
+import "firebase/firestore";
 
 import CollapsibleVideo from "./CollapsibleVideo";
 
-const db = firebase.firestore()
+const db = firebase.firestore();
 
 export default {
   components: {
@@ -103,7 +102,14 @@ export default {
   data() {
     return {
       Vods: [],
-      consecutiveMatch: false
+      consecutiveMatch: false,
+      checkedChar: [],
+      characters: [
+        { name: "Ryu" },
+        { name: "Akuma" },
+        { name: "Ken" },
+        { name: "Guile" },
+      ],
     };
   },
   created() {
@@ -139,11 +145,15 @@ export default {
       }
     },
   },
+  computed: {
+    filteredCharacter: function() {
+
+      if (!this.checkedChar.length) {
+        return this.characters;
+      } else {
+        return this.checkedChar;
+      }
+    },
+  },
 };
 </script>
-
-<style>
-.btn-primary {
-  margin-right: 12px;
-}
-</style>

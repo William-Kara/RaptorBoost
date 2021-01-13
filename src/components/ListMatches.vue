@@ -9,23 +9,29 @@
           v-model="checkedChar"
           :disabled="
             checkedChar.length == 2 &&
-              checkedChar.indexOf(character.name) === -1
+            checkedChar.indexOf(character.name) === -1
           "
         />
         <label :for="character.name">{{ character.name }}</label>
       </li>
     </ul>
     <br />
-    <span>Selected Fighters: {{ filteredCharacter }}</span>
+    <h4>Selected Fighters</h4>
+    <span 
+      v-for="character in filteredCharacters"
+      :key="character"
+    >
+      {{ character }}
+    </span>
     <table class="table table-striped">
       <li
         class="match-row"
         v-for="vod in vods"
         :key="vod.key"
         v-show="
-          filteredCharacter.includes(vod.character_1) ||
-            filteredCharacter.includes(vod.character_2) ||
-            checkedChar == 0
+          filteredCharacters.includes(vod.character_1) ||
+          filteredCharacters.includes(vod.character_2) ||
+          checkedChar == 0
         "
       >
         <b-button v-b-toggle:[vod.key] variant="light">
@@ -126,6 +132,7 @@ export default {
       snapshotChange.forEach((doc) => {
         vods.push(this.hydrateData(doc, ["player_a"]));
       });
+
       Promise.all(vods).then((vodsDatas) => {
         vodsDatas.forEach((docData) => {
           this.vods.push({
@@ -171,6 +178,7 @@ export default {
     },
     hydrateData: async function(doc, refs) {
       let arrayData = doc.data();
+      arrayData.id = doc.id
       console.log(arrayData.player_1, arrayData.player_2);
       const promises = refs.map(async (ref) => {
         const result = await this.getReference(doc, ref);
@@ -183,9 +191,12 @@ export default {
     },
   },
   computed: {
-    filteredCharacter: function() {
+    filteredCharacters: function() {
+      console.log(this.checkedChar)
       if (!this.checkedChar.length) {
-        return this.characters;
+        return this.characters.map( character => {
+          return character.name
+        });
       } else {
         return this.checkedChar;
       }

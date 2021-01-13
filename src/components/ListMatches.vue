@@ -168,26 +168,26 @@ export default {
     getReference: async function(doc, ref) {
       let data = null;
       if (doc.data()[ref]) {
-        const res = await doc.data()[ref].get();
+        const res = await doc.data()[ref].get()
         if (res) {
-          data = res.data();
-          data.uid = res.id;
+          data = res.data()
+          data.uid = res.id
         }
       }
       return data;
     },
     hydrateData: async function(doc, refs) {
-      let arrayData = doc.data();
+      let arrayData = doc.data()
       arrayData.id = doc.id
-      console.log(arrayData.player_1, arrayData.player_2);
+      // console.log(arrayData.player_1, arrayData.player_2)
       const promises = refs.map(async (ref) => {
-        const result = await this.getReference(doc, ref);
-        arrayData[ref] = result;
-      });
+        const result = await this.getReference(doc, ref)
+        arrayData[ref] = result
+      })
       return Promise.all(promises).then(() => {
-        console.log("hydrating data done for:", doc.id);
-        return arrayData;
-      });
+        // console.log("hydrating data done for:", doc.id)
+        return arrayData
+      })
     },
   },
   computed: {

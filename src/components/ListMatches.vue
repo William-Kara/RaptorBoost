@@ -18,8 +18,8 @@
     <br />
     <span>Selected Fighters: {{ filteredCharacter }}</span>
     <table class="table table-striped">
-      <li class="match-row" v-for="vod in Vods" :key="vod.key">
-        <b-button v-show="filteredCharacter.includes(vod.character_1) || checkedChar == 0" v-b-toggle:[vod.key] variant="light">
+      <li class="match-row" v-for="vod in Vods" :key="vod.key" v-show="filteredCharacter.includes(vod.character_1) || filteredCharacter.includes(vod.character_2) || checkedChar == 0">
+        <b-button v-b-toggle:[vod.key] variant="light">
           <v-divider class="my-1" v-if="consecutiveMatch" />
           <div align-center>
             <div :column="$vuetify.breakpoint.xsOnly">
@@ -109,6 +109,7 @@ export default {
         { name: "Akuma" },
         { name: "Ken" },
         { name: "Guile" },
+        { name: "Soraka" },
       ],
     };
   },

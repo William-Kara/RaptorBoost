@@ -6,12 +6,13 @@
     import firebase from "firebase/app"
     import "firebase/storage"
     const storage = firebase.storage()
+    import placeholder from "../assets/img/random_char.png" 
 
     export default {
       name: "LazyImage",
       data: () => {
         return {
-          link: "loading",
+          link: placeholder,
         }
       },
       props: [

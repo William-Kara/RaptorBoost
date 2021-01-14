@@ -77,7 +77,7 @@
                       </div>
                     </div>
                     <div class="player2-character-zone">
-                      <LazyImage
+                      <LazyImage class="character-img"
                         :imgAlt="vod.character_2"
                         :imgSrc="renderSrc(vod.character_2)"
                       />

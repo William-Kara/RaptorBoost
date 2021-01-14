@@ -275,3 +275,8 @@ button:-moz-focusring,
   justify-content: center;
   align-items:center;
 }
+
+.player2-character-zone .character-img {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}

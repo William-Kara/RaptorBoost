@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ul>
+    <ul class="character-select">
       <li v-for="character in characters" :key="character.name">
         <input
           type="checkbox"
@@ -13,6 +13,10 @@
           "
         />
         <label :for="character.name">{{ character.name }}</label>
+        <LazyImage 
+          :imgAlt="character.name" 
+          :imgSrc="character.image"
+        />
       </li>
     </ul>
     <br />
@@ -105,11 +109,17 @@ import firebase from "firebase/app";
 import "firebase/auth";
 // import 'firebase/database';
 import "firebase/firestore";
-import CollapsibleVideo from "./CollapsibleVideo";
-const db = firebase.firestore();
+// import "firebase/storage"
+
+import CollapsibleVideo from "./CollapsibleVideo"
+import LazyImage from './LazyImage'
+
+const db = firebase.firestore()
+
 export default {
   components: {
     CollapsibleVideo,
+    LazyImage
   },
   data() {
     return {
@@ -117,11 +127,26 @@ export default {
       consecutiveMatch: false,
       checkedChar: [],
       characters: [
-        { name: "Ryu" },
-        { name: "Akuma" },
-        { name: "Ken" },
-        { name: "Guile" },
-        { name: "Soraka" },
+        { 
+          name: "Ryu",
+          image: "/public/ryu.png", 
+        },
+        { 
+          name: "Akuma",
+          image: "/public/akuma.png", 
+        },
+        { 
+          name: "Ken",
+          image: "/public/ken.png", 
+        },
+        { 
+          name: "Guile",
+          image: "/public/guile.png", 
+        },
+        { 
+          name: "Soraka",
+          image: "/public/soraka.png", 
+        },
       ],
     };
   },

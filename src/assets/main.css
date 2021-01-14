@@ -253,3 +253,25 @@ button:-moz-focusring,
   max-width: 100px;
   margin: 0 auto;
 }
+
+.lazyImage {
+  width:100px;
+  height:100px;
+}
+
+.character-select {
+  list-style: none;
+  display:flex;
+  align-items: flex-start;
+  flex-direction: row;
+
+}
+
+.character-select li {
+  width: 150px;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center;
+}

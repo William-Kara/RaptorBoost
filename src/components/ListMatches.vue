@@ -9,22 +9,16 @@
           v-model="checkedChar"
           :disabled="
             checkedChar.length == 2 &&
-            checkedChar.indexOf(character.name) === -1
+              checkedChar.indexOf(character.name) === -1
           "
         />
         <label :for="character.name">{{ character.name }}</label>
-        <LazyImage 
-          :imgAlt="character.name" 
-          :imgSrc="character.image"
-        />
+        <LazyImage :imgAlt="character.name" :imgSrc="character.image" />
       </li>
     </ul>
     <br />
     <h4>Selected Fighters</h4>
-    <span 
-      v-for="character in filteredCharacters"
-      :key="character"
-    >
+    <span v-for="character in filteredCharacters" :key="character">
       {{ character }}
     </span>
     <table class="table table-striped">
@@ -34,8 +28,8 @@
         :key="vod.key"
         v-show="
           filteredCharacters.includes(vod.character_1) ||
-          filteredCharacters.includes(vod.character_2) ||
-          checkedChar == 0
+            filteredCharacters.includes(vod.character_2) ||
+            checkedChar == 0
         "
       >
         <b-button v-b-toggle:[vod.key] variant="light">
@@ -46,11 +40,10 @@
                 <div row align-center>
                   <div class="player1-zone col-md-4">
                     <div class="player1-character-zone">
-                      <img
-                        class="character-render"
-                        src="../assets/img/render/Ryu_render_l.png"
+                      <LazyImage
+                        :imgAlt="vod.character_1"
+                        :imgSrc="renderSrc(vod.character_1)"
                       />
-
                       <div class="character-name">
                         {{ vod.character_1 }}
                       </div>
@@ -84,9 +77,9 @@
                       </div>
                     </div>
                     <div class="player2-character-zone">
-                      <img
-                        class="character-render"
-                        src="../assets/img/render/Ryu_render_r.png"
+                      <LazyImage
+                        :imgAlt="vod.character_2"
+                        :imgSrc="renderSrc(vod.character_2)"
                       />
                       <div class="character-name">
                         {{ vod.character_2 }}
@@ -111,15 +104,15 @@ import "firebase/auth";
 import "firebase/firestore";
 // import "firebase/storage"
 
-import CollapsibleVideo from "./CollapsibleVideo"
-import LazyImage from './LazyImage'
+import CollapsibleVideo from "./CollapsibleVideo";
+import LazyImage from "./LazyImage";
 
-const db = firebase.firestore()
+const db = firebase.firestore();
 
 export default {
   components: {
     CollapsibleVideo,
-    LazyImage
+    LazyImage,
   },
   data() {
     return {
@@ -127,25 +120,25 @@ export default {
       consecutiveMatch: false,
       checkedChar: [],
       characters: [
-        { 
+        {
           name: "Ryu",
-          image: "/public/ryu.png", 
+          image: "/public/ryu.png",
         },
-        { 
+        {
           name: "Akuma",
-          image: "/public/akuma.png", 
+          image: "/public/akuma.png",
         },
-        { 
+        {
           name: "Ken",
-          image: "/public/ken.png", 
+          image: "/public/ken.png",
         },
-        { 
+        {
           name: "Guile",
-          image: "/public/guile.png", 
+          image: "/public/guile.png",
         },
-        { 
+        {
           name: "Soraka",
-          image: "/public/soraka.png", 
+          image: "/public/soraka.png",
         },
       ],
     };
@@ -177,6 +170,10 @@ export default {
     });
   },
   methods: {
+    renderSrc: function(char) {
+      var charRenderUrl = "/public/" + char.toLowerCase().trim() + ".png";
+      return charRenderUrl;
+    },
     deleteVod(id) {
       if (window.confirm("Do you really want to delete?")) {
         db.collection("vods")
@@ -193,34 +190,34 @@ export default {
     getReference: async function(doc, ref) {
       let data = null;
       if (doc.data()[ref]) {
-        const res = await doc.data()[ref].get()
+        const res = await doc.data()[ref].get();
         if (res) {
-          data = res.data()
-          data.uid = res.id
+          data = res.data();
+          data.uid = res.id;
         }
       }
       return data;
     },
     hydrateData: async function(doc, refs) {
-      let arrayData = doc.data()
-      arrayData.id = doc.id
+      let arrayData = doc.data();
+      arrayData.id = doc.id;
       // console.log(arrayData.player_1, arrayData.player_2)
       const promises = refs.map(async (ref) => {
-        const result = await this.getReference(doc, ref)
-        arrayData[ref] = result
-      })
+        const result = await this.getReference(doc, ref);
+        arrayData[ref] = result;
+      });
       return Promise.all(promises).then(() => {
         // console.log("hydrating data done for:", doc.id)
-        return arrayData
-      })
+        return arrayData;
+      });
     },
   },
   computed: {
     filteredCharacters: function() {
-      console.log(this.checkedChar)
+      console.log(this.checkedChar);
       if (!this.checkedChar.length) {
-        return this.characters.map( character => {
-          return character.name
+        return this.characters.map((character) => {
+          return character.name;
         });
       } else {
         return this.checkedChar;

@@ -15,7 +15,7 @@
     <span v-for="character in filteredCharacters" :key="character">
       {{ character }}
     </span>
-    <table class="table table-striped">
+    <ul class="match-list">
       <li
         class="match-row"
         v-for="vod in vods"
@@ -81,13 +81,13 @@
                     </div>
                   </div>
                 </div>
-                <CollapsibleVideo videoId="EM2JL7iqdCY" :collapseId="vod.key" />
+                <CollapsibleVideo :videoId="vod.youtube_id" :collapseId="vod.key" />
               </div>
             </div>
           </div>
         </b-button>
       </li>
-    </table>
+    </ul>
   </div>
 </template>
 
@@ -150,10 +150,12 @@ export default {
 
       Promise.all(vods).then((vodsDatas) => {
         vodsDatas.forEach((docData) => {
+          console.log(docData)
           this.vods.push({
             key: docData.id,
             title: docData.title,
             youtube_link: docData.youtube_link,
+            youtube_id: docData.youtube_id,
             player_1: docData.player_1,
             player_a: docData.player_a ? docData.player_a.name : "Inconnu",
             character_1: docData.character_1,
@@ -233,5 +235,9 @@ export default {
 <style>
   .btn-primary {
     margin-right: 12px;
+  }
+  .match-list {
+    list-style: none;
+    color: #212529;
   }
 </style>

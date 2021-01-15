@@ -83,9 +83,8 @@
 
 <script>
 import firebase from "firebase/app";
-
+import { getYoutubeId } from '../helpers/common'
 const db = firebase.firestore()
-
 export default {
   data() {
     return {
@@ -94,7 +93,8 @@ export default {
   },
   methods: {
     onFormSubmit(event) {
-      event.preventDefault();
+      event.preventDefault()
+      this.vod.youtube_id = getYoutubeId(this.vod.youtube_link)
       db.collection("vods")
         .add(this.vod)
         .then(() => {
@@ -113,5 +113,5 @@ export default {
         });
     },
   },
-};
+}
 </script>

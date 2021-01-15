@@ -39,6 +39,9 @@ export default {
       videoIsPaused: false,
     }
   },
+  mounted : function () {
+    console.log(this.videoId)
+  },
   methods: { 
     elementIsHiding : function (){
       // console.log("element is hiding")

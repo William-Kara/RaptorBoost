@@ -55,11 +55,11 @@
 }
 
 .char-select-item .lazyImage {
-  opacity: 50%;
+  opacity: 0.5;
 }
 
 .char-select-item .lazyImage.checked {
-  opacity: 100%
+  opacity: 1;
 }
 
 /*.char-select-item input[type="checkbox"]{

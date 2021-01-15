@@ -1,19 +1,13 @@
 <template>
   <div>
     <ul class="character-select">
-      <li v-for="character in characters" :key="character.name">
-        <input
-          type="checkbox"
-          id="jack"
-          :value="character.name"
-          v-model="checkedChar"
-          :disabled="
-            checkedChar.length == 2 &&
-              checkedChar.indexOf(character.name) === -1
-          "
+      <li v-for="listCharacter in characters" :key="listCharacter.name">
+        <CharactersSelectItem 
+          :character="listCharacter" 
+          :disabled="checkedChar.length >= 2 ? true : false" 
+          :selected="false" 
+          @selected:char="onSelectedChar"
         />
-        <label :for="character.name">{{ character.name }}</label>
-        <LazyImage :imgAlt="character.name" :imgSrc="character.image" />
       </li>
     </ul>
     <br />
@@ -28,8 +22,8 @@
         :key="vod.key"
         v-show="
           filteredCharacters.includes(vod.character_1) ||
-            filteredCharacters.includes(vod.character_2) ||
-            checkedChar == 0
+          filteredCharacters.includes(vod.character_2) ||
+          checkedChar == 0
         "
       >
         <b-button v-b-toggle:[vod.key] variant="light">
@@ -104,8 +98,9 @@ import "firebase/auth";
 import "firebase/firestore";
 // import "firebase/storage"
 
-import CollapsibleVideo from "./CollapsibleVideo";
-import LazyImage from "./LazyImage";
+import CollapsibleVideo from "./CollapsibleVideo"
+import LazyImage from "./LazyImage"
+import CharactersSelectItem from './CharactersSelectItem'
 
 const db = firebase.firestore();
 
@@ -113,6 +108,7 @@ export default {
   components: {
     CollapsibleVideo,
     LazyImage,
+    CharactersSelectItem,
   },
   data() {
     return {
@@ -144,6 +140,7 @@ export default {
     };
   },
   created() {
+    console.log(this.checkedChar.length)
     db.collection("vods").onSnapshot((snapshotChange) => {
       let vods = [];
 
@@ -211,10 +208,16 @@ export default {
         return arrayData;
       });
     },
+    onSelectedChar: function (char) {
+      if(this.checkedChar.indexOf(char) > -1){
+        this.checkedChar.splice(this.checkedChar.indexOf(char), 1)
+      } else {
+        this.checkedChar.push(char)
+      }
+    }
   },
   computed: {
     filteredCharacters: function() {
-      console.log(this.checkedChar);
       if (!this.checkedChar.length) {
         return this.characters.map((character) => {
           return character.name;
@@ -228,7 +231,7 @@ export default {
 </script>
 
 <style>
-.btn-primary {
-  margin-right: 12px;
-}
+  .btn-primary {
+    margin-right: 12px;
+  }
 </style>

@@ -21,9 +21,7 @@
         v-for="vod in vods"
         :key="vod.key"
         v-show="
-          filteredCharacters.includes(vod.character_1) ||
-          filteredCharacters.includes(vod.character_2) ||
-          checkedChar == 0
+        isFiltered(checkedChar, vod.character_1, vod.character_2)
         "
       >
         <b-button v-b-toggle:[vod.key] variant="light">
@@ -216,7 +214,24 @@ export default {
       } else {
         this.checkedChar.push(char)
       }
-    }
+    },
+    isFiltered: function(filteredCharAmount, char1, char2) {
+      if (filteredCharAmount.length == 0) {
+        return true;
+      } else if (filteredCharAmount.length == 1) {
+        if (this.filteredCharacters.includes(char1) || this.filteredCharacters.includes(char2)) {
+          return true;
+        } else {
+          return false;
+        }
+      } else if (filteredCharAmount.length == 2) {
+        if (this.filteredCharacters.includes(char1) && this.filteredCharacters.includes(char2)) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    },
   },
   computed: {
     filteredCharacters: function() {

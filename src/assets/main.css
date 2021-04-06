@@ -234,6 +234,10 @@ button:-moz-focusring,
   margin: 0 100px;
 }
 
+.youtube-holder div iframe {
+  max-width: 100%;
+}
+
 .card {
   display: block !important;
   background-color: transparent !important;
@@ -279,4 +283,15 @@ button:-moz-focusring,
 .player2-character-zone .character-img {
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
+}
+
+/* Submit Vod */
+
+.half-input-left {
+  width: 48% !important;
+  float: left;
+}
+.half-input-right {
+  width: 48% !important;
+  float: right;
 }

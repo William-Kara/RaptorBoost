@@ -27,6 +27,10 @@ import VueSidebarMenu from "vue-sidebar-menu";
 import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
 Vue.use(VueSidebarMenu);
 
+import VueRadioToggleButtons from 'vue-radio-toggle-buttons';
+import 'vue-radio-toggle-buttons/dist/vue-radio-toggle-buttons.css';
+Vue.use(VueRadioToggleButtons);
+
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';

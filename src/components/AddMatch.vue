@@ -191,17 +191,6 @@ export default {
       query: "",
     };
   },
-  computed: {
-    filteredOptions() {
-      return [
-        {
-          data: this.players.filter((option) => {
-            return option.name.toLowerCase().indexOf(this.query.toLowerCase()) > -1;
-          }),
-        },
-      ];
-    },
-  },
   created() {
     db.collection("players").onSnapshot((snapshotChange) => {
       this.players = [];
@@ -223,12 +212,30 @@ export default {
       });
     });
   },
+  computed: {
+    filteredOptions() {
+      return [
+        {
+          data: this.players.filter((option) => {
+            return option.name.toLowerCase().indexOf(this.query.toLowerCase()) > -1;
+          }),
+        },
+      ];
+    },
+  },
   methods: {
     onSelected(item) {
       this.selected = item.item;
     },
     getSuggestionValue(suggestion) {
       return suggestion.item.name;
+    },
+    onInputChange(text) {
+      // event fired when the input changes
+      console.log(text);
+    },
+    focusMe(e) {
+      console.log(e); // FocusEvent
     },
     nextStep: function () {
       this.step++;

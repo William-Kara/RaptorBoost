@@ -1,9 +1,9 @@
 <template>
   <div class="row justify-content-center">
-    <div class="col-md-5">
+    <div class="col-md-9">
       <h2 class="text-center">Submit a video</h2>
       <form @submit.prevent="onFormSubmit">
-        <section v-if="step == 1">
+        <section style="width: 100%" v-if="step == 1">
           <RadioToggleButtons
             v-model="currentVodType"
             :values="vodType"
@@ -24,6 +24,7 @@
           <h3 style="text-align: center">Match 1</h3>
           <div class="form-group">
             <div>
+              <p>{{ vod.youtube_link }}</p>
               <label>Match title</label>
               <input type="text" class="form-control" v-model="vod.title" required />
             </div>
@@ -82,34 +83,81 @@
             </div>
             <div class="half-input-left">
               <label>Player 1 name</label>
+              <vue-autosuggest
+                v-model="query"
+                :suggestions="filteredOptions"
+                @focus="focusMe"
+                @click="clickHandler"
+                @input="onInputChange"
+                @selected="onSelected"
+                :get-suggestion-value="getSuggestionValue"
+                :input-props="{
+                  class: 'form-control',
+                  id: 'autosuggest__input',
+                }"
+              >
+                <div
+                  slot-scope="{ suggestion }"
+                  style="display: flex; align-items: center"
+                >
+                  <div style="{ display: 'flex', color: 'navyblue'}">
+                    {{ suggestion.item.name }}
+                  </div>
+                </div>
+              </vue-autosuggest>
+            </div>
+            <div class="half-input-right">
+              <label>Player 2 name</label>
+              <vue-autosuggest
+                v-model="query"
+                :suggestions="filteredOptions"
+                @focus="focusMe"
+                @click="clickHandler"
+                @input="onInputChange"
+                @selected="onSelected"
+                :get-suggestion-value="getSuggestionValue"
+                :input-props="{
+                  class: 'form-control',
+                  id: 'autosuggest__input',
+                }"
+              >
+                <div
+                  slot-scope="{ suggestion }"
+                  style="display: flex; align-items: center"
+                >
+                  <div style="{ display: 'flex', color: 'navyblue'}">
+                    {{ suggestion.item.name }}
+                  </div>
+                </div>
+              </vue-autosuggest>
+            </div>
+            <div v-if="currentVodType == 2" class="half-input-left">
+              <label>Tournament</label>
+              <input type="text" class="form-control" v-model="vod.title" />
+            </div>
+            <div v-if="currentVodType == 2" class="half-input-right">
+              <label>Tournament round</label>
               <input
                 type="text"
                 class="form-control"
                 v-model="vod.title"
-                placeholder="00h00m00s"
+                placeholder="Semi-Final"
               />
             </div>
-            <div class="half-input-right">
-              <label>Player 1 name</label>
-              <select class="form-control" v-model="selected">
-                <option
-                  v-for="option in options"
-                  v-bind:value="option.value"
-                  v-bind:key="option"
-                >
-                  {{ option.text }}
-                </option>
-              </select>
-            </div>
           </div>
-          <label>Type of match</label>
-          <input type="radio" id="tournament" value="Un" v-model="picked" />
-          <label for="one">Tournament</label>
-          <input type="radio" id="two" value="Deux" v-model="picked" />
-          <label for="two">Deux</label>
-
-          <div class="form-group">
-            <button class="btn btn-primary btn-block">Ajouter la vidéo</button>
+          <div>
+            <button class="btn btn-primary btn-block" @click.prevent="nextStep">
+              Add a match
+            </button>
+            <button
+              class="btn btn-primary btn-block half-input-left"
+              @click.prevent="previousStep"
+            >
+              Back
+            </button>
+            <button class="btn btn-primary btn-block half-input-right">
+              Submit Match
+            </button>
           </div>
         </section>
       </form>
@@ -129,7 +177,7 @@ export default {
         { label: "Tournament Match", value: "2" },
         { label: "Educational Content", value: "3" },
       ],
-      currentVodType: "",
+      currentVodType: "1",
       vod: {},
       step: 1,
       selected: "",
@@ -138,33 +186,55 @@ export default {
         { text: "2", value: "2" },
         { text: "Ultra boost", value: "Ultra boost" },
       ],
-      characters: [
-        {
-          name: "Ryu",
-          image: "/public/ryu.png",
-        },
-        {
-          name: "Akuma",
-          image: "/public/akuma.png",
-        },
-        {
-          name: "Ken",
-          image: "/public/ken.png",
-        },
-        {
-          name: "Guile",
-          image: "/public/guile.png",
-        },
-        {
-          name: "Soraka",
-          image: "/public/soraka.png",
-        },
-      ],
+      players: [],
+      characters: [],
+      query: "",
     };
   },
+  computed: {
+    filteredOptions() {
+      return [
+        {
+          data: this.players.filter((option) => {
+            return option.name.toLowerCase().indexOf(this.query.toLowerCase()) > -1;
+          }),
+        },
+      ];
+    },
+  },
+  created() {
+    db.collection("players").onSnapshot((snapshotChange) => {
+      this.players = [];
+      snapshotChange.forEach((doc) => {
+        this.players.push({
+          key: doc.id,
+          name: doc.data().name,
+        });
+      });
+    });
+    db.collection("characters").onSnapshot((snapshotChange) => {
+      this.characters = [];
+      snapshotChange.forEach((doc) => {
+        this.characters.push({
+          key: doc.id,
+          name: doc.data().name,
+          image: doc.data().image,
+        });
+      });
+    });
+  },
   methods: {
+    onSelected(item) {
+      this.selected = item.item;
+    },
+    getSuggestionValue(suggestion) {
+      return suggestion.item.name;
+    },
     nextStep: function () {
       this.step++;
+    },
+    previousStep: function () {
+      this.step--;
     },
     onFormSubmit(event) {
       event.preventDefault();

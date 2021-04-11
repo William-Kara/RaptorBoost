@@ -2,10 +2,10 @@
   <div>
     <ul class="character-select">
       <li v-for="listCharacter in characters" :key="listCharacter.name">
-        <CharactersSelectItem 
-          :character="listCharacter" 
-          :disabled="checkedChar.length >= 2 ? true : false" 
-          :selected="false" 
+        <CharactersSelectItem
+          :character="listCharacter"
+          :disabled="checkedChar.length >= 2 ? true : false"
+          :selected="false"
           @selected:char="onSelectedChar"
         />
       </li>
@@ -20,9 +20,7 @@
         class="match-row"
         v-for="vod in vods"
         :key="vod.key"
-        v-show="
-        isFiltered(checkedChar, vod.character_1, vod.character_2)
-        "
+        v-show="isFiltered(checkedChar, vod.character_1, vod.character_2)"
       >
         <b-button v-b-toggle:[vod.key] variant="light">
           <v-divider class="my-1" v-if="consecutiveMatch" />
@@ -53,8 +51,7 @@
                       </h3>
                       <img class="versus-img" src="../assets/img/versus.png" />
                       <div class="game-version">
-                        <span v-if="vod.version"
-                          >Version: {{ vod.version }}</span
+                        <span v-if="vod.version">Version: {{ vod.version }}</span
                         ><span v-if="vod.tournament && vod.tournament"> | </span
                         ><span v-if="vod.tournament"
                           >tournament: {{ vod.tournament }}</span
@@ -69,7 +66,8 @@
                       </div>
                     </div>
                     <div class="player2-character-zone">
-                      <LazyImage class="character-img"
+                      <LazyImage
+                        class="character-img"
                         :imgAlt="vod.character_2"
                         :imgSrc="renderSrc(vod.character_2)"
                       />
@@ -96,9 +94,9 @@ import "firebase/auth";
 import "firebase/firestore";
 // import "firebase/storage"
 
-import CollapsibleVideo from "./CollapsibleVideo"
-import LazyImage from "./LazyImage"
-import CharactersSelectItem from './CharactersSelectItem'
+import CollapsibleVideo from "./CollapsibleVideo";
+import LazyImage from "./LazyImage";
+import CharactersSelectItem from "./CharactersSelectItem";
 
 const db = firebase.firestore();
 
@@ -113,32 +111,11 @@ export default {
       vods: [],
       consecutiveMatch: false,
       checkedChar: [],
-      characters: [
-        {
-          name: "Ryu",
-          image: "/public/ryu.png",
-        },
-        {
-          name: "Akuma",
-          image: "/public/akuma.png",
-        },
-        {
-          name: "Ken",
-          image: "/public/ken.png",
-        },
-        {
-          name: "Guile",
-          image: "/public/guile.png",
-        },
-        {
-          name: "Soraka",
-          image: "/public/soraka.png",
-        },
-      ],
+      characters: [],
     };
   },
   created() {
-    console.log(this.checkedChar.length)
+    console.log(this.checkedChar.length);
     db.collection("vods").onSnapshot((snapshotChange) => {
       let vods = [];
 
@@ -148,7 +125,7 @@ export default {
 
       Promise.all(vods).then((vodsDatas) => {
         vodsDatas.forEach((docData) => {
-          console.log(docData)
+          console.log(docData);
           this.vods.push({
             key: docData.id,
             title: docData.title,
@@ -165,9 +142,19 @@ export default {
         });
       });
     });
+    db.collection("characters").onSnapshot((snapshotChange) => {
+      this.characters = [];
+      snapshotChange.forEach((doc) => {
+        this.characters.push({
+          key: doc.id,
+          name: doc.data().name,
+          image: doc.data().image,
+        });
+      });
+    });
   },
   methods: {
-    renderSrc: function(char) {
+    renderSrc: function (char) {
       var charRenderUrl = "/public/" + char.toLowerCase().trim() + ".png";
       return charRenderUrl;
     },
@@ -184,7 +171,7 @@ export default {
           });
       }
     },
-    getReference: async function(doc, ref) {
+    getReference: async function (doc, ref) {
       let data = null;
       if (doc.data()[ref]) {
         const res = await doc.data()[ref].get();
@@ -195,7 +182,7 @@ export default {
       }
       return data;
     },
-    hydrateData: async function(doc, refs) {
+    hydrateData: async function (doc, refs) {
       let arrayData = doc.data();
       arrayData.id = doc.id;
       // console.log(arrayData.player_1, arrayData.player_2)
@@ -209,23 +196,29 @@ export default {
       });
     },
     onSelectedChar: function (char) {
-      if(this.checkedChar.indexOf(char) > -1){
-        this.checkedChar.splice(this.checkedChar.indexOf(char), 1)
+      if (this.checkedChar.indexOf(char) > -1) {
+        this.checkedChar.splice(this.checkedChar.indexOf(char), 1);
       } else {
-        this.checkedChar.push(char)
+        this.checkedChar.push(char);
       }
     },
-    isFiltered: function(filteredCharAmount, char1, char2) {
+    isFiltered: function (filteredCharAmount, char1, char2) {
       if (filteredCharAmount.length == 0) {
         return true;
       } else if (filteredCharAmount.length == 1) {
-        if (this.filteredCharacters.includes(char1) || this.filteredCharacters.includes(char2)) {
+        if (
+          this.filteredCharacters.includes(char1) ||
+          this.filteredCharacters.includes(char2)
+        ) {
           return true;
         } else {
           return false;
         }
       } else if (filteredCharAmount.length == 2) {
-        if (this.filteredCharacters.includes(char1) && this.filteredCharacters.includes(char2)) {
+        if (
+          this.filteredCharacters.includes(char1) &&
+          this.filteredCharacters.includes(char2)
+        ) {
           return true;
         } else {
           return false;
@@ -234,7 +227,7 @@ export default {
     },
   },
   computed: {
-    filteredCharacters: function() {
+    filteredCharacters: function () {
       if (!this.checkedChar.length) {
         return this.characters.map((character) => {
           return character.name;
@@ -248,11 +241,11 @@ export default {
 </script>
 
 <style>
-  .btn-primary {
-    margin-right: 12px;
-  }
-  .match-list {
-    list-style: none;
-    color: #212529;
-  }
+.btn-primary {
+  margin-right: 12px;
+}
+.match-list {
+  list-style: none;
+  color: #212529;
+}
 </style>

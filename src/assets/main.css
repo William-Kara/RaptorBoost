@@ -226,9 +226,8 @@ button:-moz-focusring,
 
 .game-version {
   font-size: 11px;
-  font-family: 'Vollkorn';
+  font-family: "Vollkorn";
 }
-
 
 .youtube-holder {
   margin: 0 100px;
@@ -259,16 +258,15 @@ button:-moz-focusring,
 }
 
 .lazyImage {
-  width:100px;
-  height:100px;
+  width: 100px;
+  height: 100px;
 }
 
 .character-select {
   list-style: none;
-  display:flex;
+  display: flex;
   align-items: flex-start;
   flex-direction: row;
-
 }
 
 .character-select li {
@@ -277,7 +275,7 @@ button:-moz-focusring,
   align-items: flex-start;
   flex-direction: column;
   justify-content: center;
-  align-items:center;
+  align-items: center;
 }
 
 .player2-character-zone .character-img {
@@ -294,4 +292,34 @@ button:-moz-focusring,
 .half-input-right {
   width: 48% !important;
   float: right;
+}
+
+.radio-toggle-button {
+  width: 33.333333333333333%;
+  text-align: center;
+}
+
+.autosuggest__results-container {
+  position: relative;
+  width: 100%;
+}
+
+.autosuggest__results ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  background-color: white;
+  color: black;
+  position: absolute;
+  z-index: 99;
+  width: 100%;
+  cursor: pointer;
+}
+
+.autosuggest__results ul li {
+  padding-left: 10px;
+}
+
+.autosuggest__results ul li:hover {
+  background-color: #007bff;
 }

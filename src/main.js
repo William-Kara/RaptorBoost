@@ -18,6 +18,9 @@ Vue.use(BootstrapVue);
 import SkeletonCards from "vue-ultimate-skeleton-cards";
 Vue.use(SkeletonCards);
 
+import VueAutosuggest from "vue-autosuggest";
+Vue.use(VueAutosuggest);
+
 import VueYouTubeEmbed from "vue-youtube-embed";
 import vuetify from "./plugins/vuetify";
 import i18n from "./i18n";

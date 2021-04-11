@@ -17,6 +17,7 @@
     "popper.js": "^1.16.1",
     "sortablejs": "^1.12.0",
     "vue": "^2.6.12",
+    "vue-autosuggest": "^2.2.0",
     "vue-i18n": "^8.17.3",
     "vue-radio-toggle-buttons": "^0.1.0",
     "vue-router": "^3.1.6",

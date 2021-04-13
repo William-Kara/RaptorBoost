@@ -12,7 +12,7 @@ const routes = [
   {
     path: '/add-match',
     name: 'add',
-    component: () => import('../components/AddMatch')
+    component: () => import('../components/AddMatches')
   },
   {
     path: '/view-matches',

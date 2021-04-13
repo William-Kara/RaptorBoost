@@ -285,6 +285,11 @@ button:-moz-focusring,
 
 /* Submit Vod */
 
+.form-group {
+  display: inline-block;
+  width: 100%;
+}
+
 .half-input-left {
   width: 48% !important;
   float: left;

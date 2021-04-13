@@ -29,7 +29,7 @@
 
         <section v-if="step == 2">
           <h3 style="text-align: center">Match 1</h3>
-          <AddMatch :videoTitle="videoTitleValid" />
+          <AddMatch :videoTitle.sync="videoTitle" />
           <button type="button" @click="addMatchAction">Add Component</button>
           <div>
             <button class="btn btn-primary btn-block" @click.prevent="nextStep">

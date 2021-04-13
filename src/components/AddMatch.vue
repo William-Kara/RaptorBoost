@@ -2,7 +2,7 @@
   <div class="form-group">
     <div>
       <label>Match title</label>
-      <input type="text" class="form-control" v-model="vodTitle" required />
+      <input type="text" class="form-control" v-model="videoTitleVal" required />
     </div>
     <div class="half-input-left">
       <label>Channel name</label>
@@ -132,14 +132,11 @@ export default {
       players: [],
       characters: [],
       query: "",
-      vod: {},
-      vodTitle: "",
+      vod: {}
     };
   },
-  mounted: function () {
-    this.vodTitle = this.videoTitle;
-  },
   created() {
+    console.log('vod - title', this.videoTitle)
     db.collection("players").onSnapshot((snapshotChange) => {
       this.players = [];
       snapshotChange.forEach((doc) => {
@@ -170,6 +167,15 @@ export default {
         },
       ];
     },
+    videoTitleVal: {
+      get() {
+        return this.videoTitle;
+      },
+      set(val) {
+        this.$emit('input', val);
+        this.$emit('update:videoTitle', val);
+      }
+    }
   },
   methods: {
     onSelected(item) {

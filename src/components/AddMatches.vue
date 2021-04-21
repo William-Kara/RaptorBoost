@@ -21,18 +21,30 @@
               required
             />
           </div>
-          <button class="btn btn-primary btn-block" @click.prevent="nextStep">
+          <button
+            class="btn btn-primary btn-block"
+            @click.prevent="nextStep"
+            :disabled="isDisabledBtn"
+          >
             Suivant
           </button>
-          {{ videoTitle }}
+          {{ curratedLink }}
         </section>
 
         <section v-if="step == 2">
           <h3 style="text-align: center">Match 1</h3>
-          <AddMatch :videoTitle.sync="videoTitle" />
+          <AddMatch
+            :videoTitle.sync="videoTitle"
+            :videoChannel.sync="videoChannel"
+            :videoDate.sync="videoDate"
+            :videoType="currentVodType"
+          />
           <button type="button" @click="addMatchAction">Add Component</button>
           <div>
             <button class="btn btn-primary btn-block" @click.prevent="nextStep">
+              Suivant
+            </button>
+            <button class="btn btn-primary btn-block" @click.prevent="addAMatch">
               Add a match
             </button>
             <button
@@ -71,6 +83,7 @@ export default {
   },
   data() {
     return {
+      disabledNextBtn: true,
       vodType: [
         { label: "Casual Match", value: "1" },
         { label: "Tournament Match", value: "2" },
@@ -89,8 +102,11 @@ export default {
       characters: [],
       query: "",
       videoLink: "",
+      curratedLink: "",
       videoTitle: "",
       videoTitleValid: "",
+      videoChannel: "",
+      videoDate: "",
     };
   },
   created() {
@@ -115,6 +131,9 @@ export default {
     });
   },
   computed: {
+    isDisabledBtn() {
+      return this.disabledNextBtn;
+    },
     filteredOptions() {
       return [
         {
@@ -125,13 +144,25 @@ export default {
       ];
     },
   },
+  watch: {
+    videoLink: function (val) {
+      var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+      var match = val.match(regExp);
+      this.curratedLink = match && match[7].length == 11 ? match[7] : false;
+      if (this.curratedLink !== false && this.curratedLink !== "") {
+        this.disabledNextBtn = false;
+      } else {
+        this.disabledNextBtn = true;
+      }
+    },
+  },
   methods: {
     onYTLinkChange() {
       let key = "AIzaSyDMBtC8O5C3SV-hYJSHRKaqAJzkTk-paFU";
 
       let url =
         `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=` +
-        this.videoLink +
+        this.curratedLink +
         `&key=${key}`;
 
       let getVideoData = async (url) => {
@@ -148,7 +179,9 @@ export default {
 
       getVideoData(url).then((videoData) => {
         console.log("videoData :", videoData.items[0].snippet.title);
+        this.videoDate = videoData.items[0].snippet.publishedAt;
         this.videoTitle = videoData.items[0].snippet.title;
+        this.videoChannel = videoData.items[0].snippet.channelTitle;
       });
     },
     onSelected(item) {

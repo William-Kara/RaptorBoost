@@ -18,6 +18,8 @@ Vue.use(BootstrapVue);
 import SkeletonCards from "vue-ultimate-skeleton-cards";
 Vue.use(SkeletonCards);
 
+Vue.use(require('vue-moment'));
+
 import VueAutosuggest from "vue-autosuggest";
 Vue.use(VueAutosuggest);
 

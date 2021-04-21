@@ -6,11 +6,23 @@
     </div>
     <div class="half-input-left">
       <label>Channel name</label>
-      <input type="text" class="form-control" v-model="vod.title" required />
+      <input
+        type="text"
+        class="form-control"
+        :disabled="videoChannel !== ''"
+        v-model="videoChannelVal"
+        required
+      />
     </div>
     <div class="half-input-right">
       <label>Video date</label>
-      <input type="text" class="form-control" v-model="vod.title" required />
+      <input
+        type="text"
+        class="form-control"
+        :disabled="videoDate !== ''"
+        v-model="videoDateVal"
+        required
+      />
     </div>
     <div class="half-input-left">
       <label>Timestamp of the match</label>
@@ -97,11 +109,11 @@
         </div>
       </vue-autosuggest>
     </div>
-    <div v-if="currentVodType == 2" class="half-input-left">
+    <div v-if="videoType == 2" class="half-input-left">
       <label>Tournament</label>
       <input type="text" class="form-control" v-model="vod.title" />
     </div>
-    <div v-if="currentVodType == 2" class="half-input-right">
+    <div v-if="videoType == 2" class="half-input-right">
       <label>Tournament round</label>
       <input
         type="text"
@@ -115,11 +127,15 @@
 
 <script>
 import firebase from "firebase/app";
+import moment from "moment";
 const db = firebase.firestore();
 export default {
   name: "AddMatch",
   props: {
     videoTitle: String,
+    videoChannel: String,
+    videoDate: String,
+    videoType: Number,
   },
   data() {
     return {
@@ -132,11 +148,10 @@ export default {
       players: [],
       characters: [],
       query: "",
-      vod: {}
+      vod: {},
     };
   },
   created() {
-    console.log('vod - title', this.videoTitle)
     db.collection("players").onSnapshot((snapshotChange) => {
       this.players = [];
       snapshotChange.forEach((doc) => {
@@ -172,10 +187,28 @@ export default {
         return this.videoTitle;
       },
       set(val) {
-        this.$emit('input', val);
-        this.$emit('update:videoTitle', val);
-      }
-    }
+        this.$emit("input", val);
+        this.$emit("update:videoTitle", val);
+      },
+    },
+    videoChannelVal: {
+      get() {
+        return this.videoChannel;
+      },
+      set(val) {
+        this.$emit("input", val);
+        this.$emit("update:videoChannel", val);
+      },
+    },
+    videoDateVal: {
+      get() {
+        return moment(this.videoDate.toString()).format("MM/DD/YYYY");
+      },
+      set(val) {
+        this.$emit("input", val);
+        this.$emit("update:videoDate", val);
+      },
+    },
   },
   methods: {
     onSelected(item) {
@@ -190,11 +223,6 @@ export default {
     },
     focusMe(e) {
       console.log(e); // FocusEvent
-    },
-  },
-  change: {
-    videoTitle: function (value) {
-      console.log(value);
     },
   },
 };
